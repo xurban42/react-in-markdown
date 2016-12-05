@@ -1,13 +1,17 @@
 # react-in-markdown
-v0.0.1 🎉 - by [@thekitze](http://kitze.io)
+
+> Updated [react-in-markdown](https://github.com/kitze/react-in-markdown) from [Kitze.io](http://kitze.io) - added JSON/JSObject support in params.
 
 > ⚠️ Warning: This is not a standalone library, it should be used along with the [markdown-to-react-components](https://github.com/christianalfoni/markdown-to-react-components) library
+
 
 ### What does it do?
 
 This library allows you to render custom React Components when writing Markdown, using a special syntax.
 
-```[emoji](code=fire, size=35)```
+```[emoji]({"code": "fire", "size": 35})```  
+or  
+```[emoji]({code: 'fire', size: 35})```  
 
 This will render the ```emoji``` component, with ```{code:'fire', size:'35'}``` as props.
 
@@ -48,10 +52,6 @@ MTRC.configure({
 });
 ```
 
-So when the parser finds the anchor syntax ```[emoji](code=fire,size=35)``` it will try to check if ```emoji``` is a key in our ```customComponents``` object. In this case, ```emoji``` is a key in our ```customComponents``` object, so it will render that component with the props.
+So when the parser finds the anchor syntax ```[emoji]({ code: 'fire', size: 35})``` it will try to check if ```emoji``` is a key in our ```customComponents``` object. In this case, ```emoji``` is a key in our ```customComponents``` object, so it will render that component with the props.
 
 But if we have a regular link like ```[Kitze.io](http://kitze.io)```, it will see that ```Kitze.io``` isn't a key in the ```customComponents``` object so it will just render a regular link 👉 [Kitze.io](http://kitze.io)
-
-### ToDo
-
-- Eval props after parsing them so we can use integers, booleans, arrays, and objects as props
