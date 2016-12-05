@@ -6,127 +6,23 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 var React = _interopDefault(require('react'));
 
-var matchPropRegex = / ?([^,]*) ?= ?([^,]*),? ?/g;
-
-var get = function get(object, property, receiver) {
-  if (object === null) object = Function.prototype;
-  var desc = Object.getOwnPropertyDescriptor(object, property);
-
-  if (desc === undefined) {
-    var parent = Object.getPrototypeOf(object);
-
-    if (parent === null) {
-      return undefined;
-    } else {
-      return get(parent, property, receiver);
-    }
-  } else if ("value" in desc) {
-    return desc.value;
-  } else {
-    var getter = desc.get;
-
-    if (getter === undefined) {
-      return undefined;
-    }
-
-    return getter.call(receiver);
-  }
+var quotifyJSON = function quotifyJSON(text) {
+  return text.replace(/(['"])?([a-zA-Z0-9_]+)(['"])?:([^\/])/g, '"$2":$4');
 };
 
+var decodeHTMLEntities = function decodeHTMLEntities(text) {
+  var entities = [['amp', '&'], ['apos', '\''], ['#x27', '\''], ['#x2F', '/'], ['#39', '\''], ['#47', '/'], ['lt', '<'], ['gt', '>'], ['nbsp', ' '], ['quot', '"']];
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-var set = function set(object, property, value, receiver) {
-  var desc = Object.getOwnPropertyDescriptor(object, property);
-
-  if (desc === undefined) {
-    var parent = Object.getPrototypeOf(object);
-
-    if (parent !== null) {
-      set(parent, property, value, receiver);
-    }
-  } else if ("value" in desc && desc.writable) {
-    desc.value = value;
-  } else {
-    var setter = desc.set;
-
-    if (setter !== undefined) {
-      setter.call(receiver, value);
-    }
+  for (var i = 0, max = entities.length; i < max; ++i) {
+    text = text.replace(new RegExp('&' + entities[i][0] + ';', 'g'), entities[i][1]);
   }
 
-  return value;
-};
-
-var slicedToArray = function () {
-  function sliceIterator(arr, i) {
-    var _arr = [];
-    var _n = true;
-    var _d = false;
-    var _e = undefined;
-
-    try {
-      for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
-        _arr.push(_s.value);
-
-        if (i && _arr.length === i) break;
-      }
-    } catch (err) {
-      _d = true;
-      _e = err;
-    } finally {
-      try {
-        if (!_n && _i["return"]) _i["return"]();
-      } finally {
-        if (_d) throw _e;
-      }
-    }
-
-    return _arr;
-  }
-
-  return function (arr, i) {
-    if (Array.isArray(arr)) {
-      return arr;
-    } else if (Symbol.iterator in Object(arr)) {
-      return sliceIterator(arr, i);
-    } else {
-      throw new TypeError("Invalid attempt to destructure non-iterable instance");
-    }
-  };
-}();
-
-var getRegexMatches = function getRegexMatches(string, regexExpression, callback) {
-  var match = void 0;
-  while ((match = regexExpression.exec(string)) !== null) {
-    callback(match);
-  }
+  return text;
 };
 
 var getPropsObject = function getPropsObject(propsString) {
-  var object = {};
-  getRegexMatches(propsString, matchPropRegex, function (_ref) {
-    var _ref2 = slicedToArray(_ref, 3),
-        fullMatch = _ref2[0],
-        key = _ref2[1],
-        value = _ref2[2];
-
-    object[key] = value;
-  });
-  return object;
+  var decodedProps = quotifyJSON(decodeHTMLEntities(propsString));
+  return JSON.parse(decodedProps);
 };
 
 var link = function link(_ref) {

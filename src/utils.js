@@ -1,16 +1,31 @@
 import {matchPropRegex} from './regex';
 
-export const getRegexMatches = (string, regexExpression, callback) => {
-  let match;
-  while (( match = regexExpression.exec(string) ) !== null) {
-    callback(match);
+const quotifyJSON = (text) => {
+  return text.replace(/(['"])?([a-zA-Z0-9_]+)(['"])?:([^\/])/g, '"$2":$4');
+}
+
+const decodeHTMLEntities = (text) => {
+  const entities = [
+      ['amp', '&'],
+      ['apos', '\''],
+      ['#x27', '\''],
+      ['#x2F', '/'],
+      ['#39', '\''],
+      ['#47', '/'],
+      ['lt', '<'],
+      ['gt', '>'],
+      ['nbsp', ' '],
+      ['quot', '"']
+  ];
+
+  for (let i = 0, max = entities.length; i < max; ++i) {
+    text = text.replace(new RegExp('&'+entities[i][0]+';', 'g'), entities[i][1]);
   }
-};
+
+  return text;
+}
 
 export const getPropsObject = propsString => {
-  const object = {};
-  getRegexMatches(propsString, matchPropRegex, ([fullMatch, key,value]) => {
-    object[key] = value;
-  });
-  return object;
+  const decodedProps = quotifyJSON(decodeHTMLEntities(propsString));
+  return JSON.parse(decodedProps);
 }
