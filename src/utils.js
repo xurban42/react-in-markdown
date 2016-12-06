@@ -1,7 +1,7 @@
 import {matchPropRegex} from './regex';
 
 const quotifyJSON = (text) => {
-  return text.replace(/\'/g,'"').replace(/(["])?([a-zA-Z0-9_]+)(["])?\s*:\s*([\"\{\[0-9]|null|undefined)/g, '"$2":$4');
+  return text.replace(/(["'])?([a-zA-Z0-9_]+)(["])?\s*:\s*([\"\{\[0-9]|null|undefined)/g, '"$2":$4');
 }
 
 const decodeHTMLEntities = (text) => {

@@ -11,9 +11,9 @@ This library allows you to render custom React Components when writing Markdown,
 
 ```[emoji]({"code": "fire", "size": 35})```  
 or  
-```[emoji]({code: 'fire', size: 35})```  
+```[emoji]({code: "fire", size: 35})```  
 
-This will render the ```emoji``` component, with ```{code:'fire', size:'35'}``` as props.
+This will render the ```emoji``` component, with ```{code:"fire", size:"35"}``` as props.
 
 
 ### How does rendering Markdown to React work?
@@ -52,6 +52,6 @@ MTRC.configure({
 });
 ```
 
-So when the parser finds the anchor syntax ```[emoji]({ code: 'fire', size: 35})``` it will try to check if ```emoji``` is a key in our ```customComponents``` object. In this case, ```emoji``` is a key in our ```customComponents``` object, so it will render that component with the props.
+So when the parser finds the anchor syntax ```[emoji]({ code: "fire", size: 35})``` it will try to check if ```emoji``` is a key in our ```customComponents``` object. In this case, ```emoji``` is a key in our ```customComponents``` object, so it will render that component with the props.
 
 But if we have a regular link like ```[Kitze.io](http://kitze.io)```, it will see that ```Kitze.io``` isn't a key in the ```customComponents``` object so it will just render a regular link 👉 [Kitze.io](http://kitze.io)
