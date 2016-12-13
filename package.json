@@ -1,9 +1,9 @@
 {
   "name": "react-components-in-markdown",
-  "version": "0.1.3",
+  "version": "0.1.5",
   "description": "Render custom React components in Markdown",
-  "main": "dist/react-in-markdown.js",
-  "jsnext:main": "dist/react-in-markdown.es2015.js",
+  "main": "dist/react-components-in-markdown.js",
+  "jsnext:main": "dist/react-components-in-markdown.es2015.js",
   "scripts": {
     "test": "jest",
     "build": "./node_modules/rollup-babel-lib-bundler/bin/index.js index.js"

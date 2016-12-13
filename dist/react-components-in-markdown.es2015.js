@@ -1,11 +1,11 @@
 import React from 'react';
 
 var quotifyJSON = function quotifyJSON(text) {
-  return text.replace(/\'/g, '"').replace(/(["])?([a-zA-Z0-9_]+)(["])?:([^\/])/g, '"$2":$4');
+  return text.replace(/(["'])?([a-zA-Z0-9_]+)(["])?\s*:\s*([\"\{\[0-9]|null|undefined)/g, '"$2":$4');
 };
 
 var decodeHTMLEntities = function decodeHTMLEntities(text) {
-  var entities = [['amp', '&'], ['apos', '\''], ['#x27', '\''], ['#x2F', '/'], ['#39', '\''], ['#47', '/'], ['lt', '<'], ['gt', '>'], ['nbsp', ' '], ['quot', '"']];
+  var entities = [['amp', '&'], ['apos', '\''], ['#x27', '\''], ['#x2F', '/'], ['#39', '\''], ['#47', '/'], ['#40', '('], ['#41', ')'], ['lt', '<'], ['gt', '>'], ['nbsp', ' '], ['quot', '"']];
 
   for (var i = 0, max = entities.length; i < max; ++i) {
     text = text.replace(new RegExp('&' + entities[i][0] + ';', 'g'), entities[i][1]);

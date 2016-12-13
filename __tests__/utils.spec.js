@@ -3,9 +3,9 @@ import {matchPropRegex} from '../src/regex';
 
 test('getPropsObject', () => {
   const props1 = '{ id:"5", user:"kitze" }';
-  const props2 = '{ id:\'5\', user:\'kitze\' }';
+  const props2 = '{ id:"5", user:"kitze" }';
   const props3 = '{ "id":"5", "user":"kitze" }';
-  const props4 = "{ id: 5, user:[ 'xurban42' , 'kitze'] }";
+  const props4 = '{ id: 5, user:[ "xurban42" , "kitze"] }';
 
   const result = {
     id: '5',
